@@ -1,7 +1,18 @@
-version: "3.7"
+version: '3'
 services:
   vaultserver:
     build: .
+    command: vault server -dev -dev-root-token-id="tokenNotSecure"
     environment:
-      - VAULT_ADDR='http://127.0.0.1:8200'
-      - VAULT_DEV_ROOT_TOKEN_ID="tokenNotSecure"
+      VAULT_ADDR: 'http://127.0.0.1:8200'
+      VAULT_DEV_ROOT_TOKEN_ID: "tokenNotSecure"
+  testDB:
+    image: mysql:5.7.26
+    ports:
+      - "33061:3306"
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: vaultUser
+      MYSQL_PASSWORD: S3cretPass
